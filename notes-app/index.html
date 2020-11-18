@@ -7,7 +7,17 @@
     <body>
         <h1>Notes App</h1>
         <h2>Your Unique Notetaking App</h2>
-        <button>Click me</button>
+        <input id="note-text" type="text" placeholder="Filter your notes">  
+        <select id="filter-by">
+            <option value="byEdited">Sort by last edited</option>
+            <option value="byCreated">Sort by recently created</option>
+            <option value="alphabetical">Sort by alphabetical</option>
+        </select>
+        <div id='notes-list'></div>
+        <form id="new-notes-form">
+            <input id="new-notes" type="text" placeholder="Add new notes here" name="notes">
+            <button type="submit">Submit</button>
+        </form>
         <script src="notes-app.js"></script>
     </body>
 </html>

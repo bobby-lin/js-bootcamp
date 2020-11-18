@@ -3,7 +3,18 @@
     <head></head>
     <body>
         <h1>ToDo App</h1>
-        <button>Add Item</button>
+        <div id="summary"></div>
+        <input id="search-text" placeholder="Search for todo item">
+        <label>
+            <input id="hide-completed" type="checkbox">Hide completed
+        </label>
+        <div id='todo-list'></div>
+        <form id='new-todo-form'>
+            <input id="new-todo-text" type="text" placeholder="Add new todo here" name="newTodo">
+            <button id="add-item">Add Item</button>
+        </form>
+        <script src="uuidv4.js"></script>
+        <script src="todo-functions.js"></script>
         <script src="todo.js"></script>
     </body>
 </html>
