@@ -1,50 +1,48 @@
-const notes = [{
-    title: 'My next trip',
-    body: 'New Zealand'
-}, {
-    title: 'Habbits to work on',
-    body: 'Focus'
-}, {
-    title: 'Office Modification',
-    body: ' Buy better monitor'
-}]
+'use strict'
+
+let notes = getSavedNotes();
 
 const filterText = {
-    searchText: ""
+    searchText: "",
+    sort: "byEdited"
 }
 
-let renderNotes = function(notes, filterText) {
-
-    // Filter out the notes based on the filter text
-    const filteredNotes = notes.filter(function(note) {
-        return note.title.toLowerCase().includes(filterText.searchText.toLowerCase());
-    })
-
-    document.querySelector('#notes-list').innerHTML = "" // Clear all the notes in this div
-    
-    filteredNotes.forEach(function(item) {
-        const note = document.createElement('p');
-        note.setAttribute("class", "note");
-        note.textContent = item.title;
-        document.querySelector('#notes-list').appendChild(note);
-    })
-}
-
-renderNotes(notes, filterText)
+renderNotes(notes, filterText);
 
 // Listens for a search query from user
-document.querySelector('#note-text').addEventListener('input', function(e) {
+document.querySelector('#note-text').addEventListener('input', (e) => {
     filterText.searchText = e.target.value;
+    renderNotes(notes, filterText);
+});
+
+// Listens for a new item being submitted by a user
+document.querySelector('#create-note').addEventListener('click', (e) => {
+    e.preventDefault();
+    const uuid = uuidv4();
+    const now = moment()
+    const note = {
+        id: uuid,
+        title: '',
+        body: '',
+        createdAt: now.valueOf(),
+        updatedAt: now.valueOf()
+    };
+    notes.push(note);
+    saveNote(notes);
+    location.replace('/edit.html#' + uuid);
+})
+
+// Sorting the list of notes by the selected option
+// By default, the value is sorted by last edited
+document.querySelector("#sort-by").addEventListener('change', (e) => {
+    filterText.sort = e.target.value;
     renderNotes(notes, filterText);
 })
 
-// Listens for a new item being submitted by a user
-document.querySelector('#new-notes-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log(e.target.elements.notes.value);
-    e.target.elements.notes.value = "";
-})
-
-document.querySelector("#filter-by").addEventListener('change', function(e) {
-    console.log(e.target.value);
+// Listens for changes in local storage
+window.addEventListener("storage", (e) => {
+    if(e.key === "notes") {
+        notes = JSON.parse(e.newValue);
+        renderNotes(notes, filterText);
+    }
 })

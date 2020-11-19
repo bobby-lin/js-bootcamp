@@ -4,6 +4,9 @@ A (90-100), B (80-89), C (70-79), D (60-69), E (0-59)
 */
 
 let getGrade = function(score, total) {
+    if (typeof score !== "number" || typeof total !== "number") {
+        throw new Error("Arguments must be numbers");
+    }
     let percent = (score / total) * 100;
     let grade;
     if (percent >= 90) {
@@ -23,6 +26,11 @@ let getGrade = function(score, total) {
     return grade;
 }
 
-console.log(getGrade());
 console.log(getGrade(15, 20));
 console.log(getGrade(4, 5));
+
+try {
+    console.log(getGrade("abc", 2));
+} catch (e) {
+    console.log(e.message);
+}

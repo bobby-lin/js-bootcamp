@@ -1,3 +1,4 @@
+'use strict'
 let todos = getSavedNotes();
 
 const filters = {
@@ -9,13 +10,13 @@ renderToDo(todos, filters);
 
 // Listens for a search query from user input
 // Every time a user type or remove something in the filter form, the list will be refreshed
-document.querySelector('#search-text').addEventListener('input', function(e) {
+document.querySelector('#search-text').addEventListener('input', (e) => {
     filters.searchText = e.target.value; // Use .value to get the search text
     renderToDo(todos, filters);
 })
 
 // Listens for a new todo submission from user (the event is submit)
-document.querySelector('#new-todo-form').addEventListener('submit', function(e) {
+document.querySelector('#new-todo-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const newTodo = e.target.elements.newTodo.value
     todos.push({
@@ -30,7 +31,7 @@ document.querySelector('#new-todo-form').addEventListener('submit', function(e) 
 
 // Listens for checkbox changes to hide or unhide incomplete items
 // Get the boolean value from the element target
-document.querySelector('#hide-completed').addEventListener('change', function(e) {
+document.querySelector('#hide-completed').addEventListener('change', (e) => {
     filters.hideCompleted = e.target.checked;
     renderToDo(todos, filters);
 })
